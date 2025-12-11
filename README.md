@@ -30,6 +30,19 @@ A feature-rich Discord bot built with Discord.py, featuring utility, fun, modera
 - `!daily` - Daily coin reward
 - `!transfer` - Send coins to users
 
+### 🎵 Advanced Music System
+- **Playback Control**: Play, pause, resume, skip, stop, seek
+- **Queue Management**: Add/remove songs, shuffle, loop modes
+- **Volume & Speed**: 0-200% volume, 0.5x-2x speed control
+- **Audio Effects**: Equalizer presets, nightcore, slowed effects
+- **User Favorites**: Save favorite songs and create playlists
+- **Music Statistics**: Listening history, top songs/artists per user
+- **Discovery**: Mood-based and decade-based playlists
+- **Multiple Sources**: YouTube, Spotify, SoundCloud support
+- **Rich Display**: Professional now playing cards with progress bars
+- **Audio Quality**: Adaptive bitrate, multiple quality options
+- See [Music Guide](MUSIC_GUIDE.md) for comprehensive documentation
+
 ### 🎫 Advanced Ticketing System
 - **Ticket Creation**: Users can create tickets via commands or interactive panels
 - **Ticket Management**: Create, assign, claim, and close tickets

@@ -83,7 +83,8 @@ class MultipurposeBot(commands.Bot):
             'cogs.economy',
             'cogs.ticketing',
             'cogs.giveaway',
-            'cogs.logging'
+            'cogs.logging',
+            'cogs.music'
         ]
         
         for extension in extensions:
