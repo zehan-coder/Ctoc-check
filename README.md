@@ -9,11 +9,16 @@ A feature-rich Discord bot built with Discord.py, featuring utility, fun, modera
 - `!help` - Show command help
 - `!info` - Bot information
 - `!avatar` - Get user's avatar
+- `!userinfo [user]` - Get detailed user information
+- `!serverinfo` - Get detailed server information
 
 ### 🎮 Fun Commands
 - `!joke` - Random jokes
-- `!8ball` - Magic 8ball responses
+- `!8ball <question>` - Magic 8ball responses
 - `!coinflip` - Flip a coin
+- `!riddle` - Get a random riddle to solve
+- `!answer <answer>` - Answer the current riddle
+- `!meme` - Get a random meme template
 
 ### 🛡️ Moderation Commands
 - `!kick` - Kick users
@@ -26,9 +31,10 @@ A feature-rich Discord bot built with Discord.py, featuring utility, fun, modera
 - `!userinfo` - User profile information
 
 ### 💰 Economy & Leveling
-- `!profile` - View profile and stats
-- `!daily` - Daily coin reward
-- `!transfer` - Send coins to users
+- `!profile [user]` - View profile and stats
+- `!daily` - Claim your daily coin reward
+- `!transfer <user> <amount>` - Send coins to another user
+- `!leaderboard [limit]` - View the top coin holders (default: 10)
 
 ### 🎵 Advanced Music System
 - **Playback Control**: Play, pause, resume, skip, stop, seek
@@ -150,6 +156,7 @@ discord-bot-multipurpose/
 ├── ticket_database.py          # Ticket database management
 ├── database_manager.py         # Giveaway & logging database
 ├── cogs/                       # Command categories
+│   ├── __init__.py            # Cogs package
 │   ├── utility.py             # Utility commands
 │   ├── fun.py                 # Fun commands
 │   ├── moderation.py          # Moderation commands
@@ -157,12 +164,14 @@ discord-bot-multipurpose/
 │   ├── economy.py             # Economy & leveling
 │   ├── ticketing.py           # Advanced ticketing system
 │   ├── giveaway.py            # Advanced giveaway system
+│   ├── music.py               # Advanced music system
+│   ├── music_config.py        # Music configuration
 │   └── logging.py             # Enterprise logging system
+├── data/                      # Data storage directory
+│   └── tickets.db            # Ticketing database (auto-created)
 ├── requirements.txt           # Python dependencies
 ├── .env.example              # Environment template
 ├── .gitignore                # Git ignore rules
-├── tickets.db                # Ticketing database (auto-created)
-├── advanced.db               # Giveaway & logging database (auto-created)
 ├── bot.log                   # Bot logs (auto-created)
 └── README.md                 # This file
 ```
@@ -222,13 +231,16 @@ discord-bot-multipurpose/
 !joke          # Tell a random joke
 !8ball <question>  # Ask the magic 8ball
 !coinflip      # Flip a coin
+!riddle        # Get a random riddle to solve
+!answer <answer>   # Answer the riddle
+!meme          # Get a random meme template
 ```
 
 ### Server Information
 ```
 !serverinfo    # Server details
-!userinfo      # Your profile info
-!avatar        # Get someone's avatar
+!userinfo [user]  # User profile info
+!avatar [user]    # Get someone's avatar
 ```
 
 ### Moderation
@@ -241,9 +253,10 @@ discord-bot-multipurpose/
 
 ### Economy System
 ```
-!profile       # Check your stats
-!daily         # Claim daily coins
-!transfer @user 100  # Send 100 coins
+!profile [user]    # Check your stats (or another user's)
+!daily             # Claim daily coins (cooldown: 24 hours)
+!transfer @user 100    # Send 100 coins to another user
+!leaderboard [limit]   # View top coin holders (default: 10)
 ```
 
 ### Giveaway Commands (Admin Only)

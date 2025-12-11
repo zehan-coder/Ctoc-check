@@ -16,8 +16,15 @@ logger = logging.getLogger(__name__)
 class TicketDatabase:
     """SQLite database for ticket management."""
     
-    def __init__(self, db_path: str = "tickets.db"):
+    def __init__(self, db_path: str = None):
         """Initialize the database."""
+        if db_path is None:
+            # Create data directory if it doesn't exist
+            Path("data").mkdir(exist_ok=True)
+            db_path = "data/tickets.db"
+        else:
+            # Create parent directories for custom paths
+            Path(db_path).parent.mkdir(parents=True, exist_ok=True)
         self.db_path = db_path
         self.init_database()
     

@@ -155,6 +155,54 @@ class EconomyCog(commands.Cog):
         embed.add_field(name="Your New Balance", value=f"{sender_data['coins']:,} coins", inline=True)
         
         await ctx.send(embed=embed)
+    
+    @commands.hybrid_command(name="leaderboard", description="Show top coin holders")
+    async def leaderboard(self, ctx, limit: int = 10):
+        """Show the leaderboard of top coin holders."""
+        if limit < 1 or limit > 100:
+            await ctx.send("Limit must be between 1 and 100!")
+            return
+        
+        if not self.user_data:
+            await ctx.send("No users have any coins yet!")
+            return
+        
+        # Sort users by coins
+        sorted_users = sorted(
+            self.user_data.items(),
+            key=lambda x: x[1].get("coins", 0),
+            reverse=True
+        )
+        
+        # Get top users with their names
+        top_users = []
+        for user_id_str, user_data in sorted_users[:limit]:
+            try:
+                user = await self.bot.fetch_user(int(user_id_str))
+                top_users.append((user.display_name, user_data.get("coins", 0)))
+            except:
+                top_users.append((f"User {user_id_str}", user_data.get("coins", 0)))
+        
+        if not top_users:
+            await ctx.send("No users found in the leaderboard!")
+            return
+        
+        embed = discord.Embed(
+            title="💰 Coin Leaderboard",
+            description=f"Top {len(top_users)} coin holders",
+            color=0xffd700
+        )
+        
+        leaderboard_text = ""
+        medals = ["🥇", "🥈", "🥉"]
+        for idx, (username, coins) in enumerate(top_users):
+            medal = medals[idx] if idx < 3 else f"{idx + 1}."
+            leaderboard_text += f"{medal} **{username}** - {coins:,} coins\n"
+        
+        embed.add_field(name="Rankings", value=leaderboard_text, inline=False)
+        embed.set_footer(text=f"Requested by {ctx.author.display_name}")
+        
+        await ctx.send(embed=embed)
 
 
 async def setup(bot):
