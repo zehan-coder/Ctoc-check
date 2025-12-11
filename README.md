@@ -1,6 +1,6 @@
-# Multipurpose Discord Bot with Advanced Ticketing System
+# Multipurpose Discord Bot with Advanced Features
 
-A feature-rich Discord bot built with Discord.py, featuring utility, fun, moderation, information, economy commands, and an **advanced integrated ticketing system**.
+A feature-rich Discord bot built with Discord.py, featuring utility, fun, moderation, information, economy commands, plus **advanced ticketing system**, **comprehensive giveaway system**, and **enterprise-grade logging**.
 
 ## Features
 
@@ -43,6 +43,37 @@ A feature-rich Discord bot built with Discord.py, featuring utility, fun, modera
 - **Auto-closing**: Automatic closure of inactive tickets (configurable)
 - **Ticket Panels**: Interactive embed-based panels for ticket creation
 - **Ticket Search**: View your ticket history and status
+
+### 🎁 Advanced Giveaway System
+- **Customizable Giveaways**: Duration, prizes, winner count
+- **Multiple Entry Methods**: Reactions, buttons, command-based
+- **Role-Based Eligibility**: Require or exclude specific roles
+- **Account Age Requirements**: Minimum account creation time
+- **Server Membership Filters**: Minimum time in server
+- **Whitelist/Blacklist**: Control who can win
+- **Multi-Prize Giveaways**: Different prizes for each winner
+- **Fair Winner Selection**: Weighted random selection with entry count
+- **Winner Notifications**: Automatic DMs to winners
+- **Giveaway Reminders**: Notifications at 1 hour and 10 minutes before end
+- **Pause/Resume**: Temporarily pause active giveaways
+- **Reroll Functionality**: Select new winners
+- **Giveaway History**: Track past giveaways and results
+- **Templates**: Save and reuse giveaway configurations
+
+### 📊 Enterprise-Grade Logging System
+- **Message Logging**: Deleted, edited, bulk deleted messages
+- **Member Logging**: Joins, leaves, bans, kicks, role changes
+- **Channel Logging**: Creation, deletion, updates
+- **Role Logging**: Creation, deletion, permission changes
+- **Server Logging**: Settings changes, webhooks, integrations
+- **Command Logging**: All command executions with arguments
+- **User Activity Timeline**: Complete activity history per user
+- **Searchable Logs**: Filter by type, user, action, date range
+- **Export Functionality**: Export logs to JSON/CSV formats
+- **Log Retention**: Automatic cleanup of old logs
+- **Statistics Dashboard**: Log statistics and trends
+- **Suspicious Activity Detection**: Pattern detection for spam/raids
+- **Audit Trail**: Full accountability with moderator tracking
 
 ## Installation
 
@@ -104,17 +135,21 @@ A feature-rich Discord bot built with Discord.py, featuring utility, fun, modera
 discord-bot-multipurpose/
 ├── bot.py                      # Main bot file
 ├── ticket_database.py          # Ticket database management
+├── database_manager.py         # Giveaway & logging database
 ├── cogs/                       # Command categories
 │   ├── utility.py             # Utility commands
 │   ├── fun.py                 # Fun commands
 │   ├── moderation.py          # Moderation commands
 │   ├── information.py         # Information commands
 │   ├── economy.py             # Economy & leveling
-│   └── ticketing.py           # Advanced ticketing system
+│   ├── ticketing.py           # Advanced ticketing system
+│   ├── giveaway.py            # Advanced giveaway system
+│   └── logging.py             # Enterprise logging system
 ├── requirements.txt           # Python dependencies
 ├── .env.example              # Environment template
 ├── .gitignore                # Git ignore rules
-├── tickets.db                # SQLite database (auto-created)
+├── tickets.db                # Ticketing database (auto-created)
+├── advanced.db               # Giveaway & logging database (auto-created)
 ├── bot.log                   # Bot logs (auto-created)
 └── README.md                 # This file
 ```
@@ -198,6 +233,25 @@ discord-bot-multipurpose/
 !transfer @user 100  # Send 100 coins
 ```
 
+### Giveaway Commands (Admin Only)
+```
+!giveaway start <minutes> [winners] <title>  # Start a new giveaway
+!giveaway list                               # List active giveaways
+!giveaway end <giveaway_id>                 # End giveaway early
+!giveaway reroll <giveaway_id>              # Reroll winner(s)
+!giveaway results <giveaway_id>             # View giveaway results
+```
+
+### Logging Commands (Admin Only)
+```
+!logs config [channel]      # Configure logging channel
+!logs search [type] [limit] # Search logs (types: all, message, member, channel, command, server)
+!logs user @user [limit]    # View user activity
+!logs stats                 # View logging statistics
+!logs export [format]       # Export logs (json or csv)
+!logs dashboard             # View activity dashboard
+```
+
 ## Ticketing System Guide
 
 ### For Users
@@ -244,6 +298,51 @@ discord-bot-multipurpose/
 5. **Feedback** → User rates satisfaction (1-5 stars)
 6. **Archive** → Transcript is saved, channel can be archived
 
+## Giveaway System Guide
+
+### Quick Start
+1. **Start Giveaway**: `!giveaway start 30 1 Amazing Prize` (30 minutes, 1 winner)
+2. **Users Enter**: Click the "Enter Giveaway" button
+3. **Giveaway Ends**: Automatically after duration expires
+4. **Winners Announced**: Posted in channel and DM'd
+
+### Advanced Features
+- **Role Requirements**: Require specific roles to participate
+- **Account Age**: Users must have account older than X days
+- **Server Membership**: Users must be in server for X days
+- **Blacklist/Whitelist**: Control who can win
+- **Multiple Winners**: Each winner gets their own prize
+- **Reroll**: Select different winners from existing entries
+
+### Giveaway Management
+- Active giveaways are automatically tracked
+- Winners are selected fairly with weighted random (more entries = higher chance)
+- Past giveaway results are stored indefinitely
+- Giveaways can be ended early if needed
+
+## Logging System Guide
+
+### Log Types
+- **message** - Message deletions, edits, bulk deletions
+- **member** - Member joins, leaves, bans, kicks
+- **channel** - Channel creation, deletion, updates
+- **server** - Role changes, server settings
+- **command** - Command executions
+- **mod** - Moderation actions
+
+### Setup Logging
+1. **Configure Log Channel**: `!logs config #logging`
+2. **System Starts Recording**: All events logged automatically
+3. **View Logs**: Use search and filter commands
+4. **Export Data**: Export for external analysis
+
+### Log Features
+- **User Activity**: See all actions by a specific user
+- **Search & Filter**: Find specific events
+- **Statistics**: Get insights into server activity
+- **Export**: Download logs as JSON or CSV
+- **Auto-Cleanup**: Old logs automatically deleted based on retention
+
 ## Permissions
 
 ### Bot Permissions Required
@@ -255,17 +354,20 @@ discord-bot-multipurpose/
 - Kick Members (for kick command)
 - Ban Members (for ban command)
 - Manage Messages (for clear command)
+- View Audit Log (for logging moderation actions)
 
 ### User Permissions
 - `!kick`, `!ban`, `!warn`: Requires Kick Members permission
 - `!clear`: Requires Manage Messages permission
 - `!ticket-claim`, `!ticket-assign`, `!ticket-close`: Requires Manage Messages permission
 - `!ticket-create`, `!ticket-note`: Available to all users
+- `!giveaway *`: Requires Administrator permission
+- `!logs *`: Requires Administrator permission
 - All other commands are available to all users
 
 ## Database
 
-### SQLite Tables
+### Ticket Database (tickets.db)
 - **tickets** - Main ticket information
 - **ticket_notes** - Comments and notes on tickets
 - **ticket_claims** - Staff claims on tickets
@@ -273,7 +375,16 @@ discord-bot-multipurpose/
 - **ticket_ratings** - User satisfaction ratings
 - **user_profiles** - User statistics
 
-The database is automatically created on first run and persists across bot restarts.
+### Advanced Database (advanced.db)
+- **giveaways** - Active and completed giveaways
+- **giveaway_entries** - User entries in giveaways
+- **giveaway_winners** - Giveaway winners and results
+- **giveaway_templates** - Saved giveaway templates
+- **logs** - Complete server event logs
+  - Indexed for fast searching
+  - Includes automatic expiration for old logs
+
+Both databases are automatically created on first run and persist across bot restarts.
 
 ## Economy System
 
