@@ -400,7 +400,7 @@ asyncio.run(test_concurrent_plays())
 ### YouTube Search
 ```python
 async def test_youtube_search():
-    from music_utils import SearchManager
+    from cogs.music import SearchManager
     
     manager = SearchManager()
     results = await manager.search_youtube("Never Gonna Give You Up", max_results=5)
@@ -414,7 +414,7 @@ async def test_youtube_search():
 ### Spotify Integration
 ```python
 async def test_spotify_search():
-    from music_utils import SearchManager
+    from cogs.music import SearchManager
     
     manager = SearchManager()
     results = await manager.search_spotify("Bohemian Rhapsody", max_results=5)
