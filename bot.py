@@ -32,32 +32,28 @@ class MultipurposeBot(commands.Bot):
     """Main bot class with custom functionality."""
     
     def __init__(self):
+        # Configuration - Load prefix before initialization
+        self.prefix = os.getenv('BOT_PREFIX', '!')
+        
         # Define intents
         intents = discord.Intents.default()
         intents.message_content = True
         intents.members = True
         
         super().__init__(
-            command_prefix=self.get_prefix,
+            command_prefix=commands.when_mentioned_or(self.prefix),
             intents=intents,
             case_insensitive=True,
             help_command=None
         )
         
-        # Configuration
+        # Additional configuration
         self.token = os.getenv('DISCORD_TOKEN')
-        self.prefix = os.getenv('BOT_PREFIX', '!')
         self.admin_ids = [int(id_str) for id_str in os.getenv('ADMIN_USER_IDS', '').split(',') if id_str.strip()]
         self.error_log_channel = os.getenv('ERROR_LOG_CHANNEL_ID')
         
         # Error handling
         self.logger = logger
-        
-    async def get_prefix(self, message):
-        """Get the bot prefix."""
-        if not self.is_ready():
-            return self.prefix
-        return commands.when_mentioned_or(self.prefix)(message)
     
     async def setup_hook(self):
         """Setup hook called when bot is starting."""
