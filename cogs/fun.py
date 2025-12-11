@@ -39,6 +39,58 @@ class FunCog(commands.Cog):
             "Don't count on it.", "My reply is no.", "My sources say no.",
             "Outlook not so good.", "Very doubtful."
         ]
+        
+        # Riddles
+        self.riddles = [
+            {
+                "riddle": "I speak without a mouth and hear without ears. I have no body, but I come alive with wind. What am I?",
+                "answer": "An echo"
+            },
+            {
+                "riddle": "What has hands but cannot clap?",
+                "answer": "A clock"
+            },
+            {
+                "riddle": "I am not alive, but I grow. I don't have lungs, but I need air. What am I?",
+                "answer": "Fire"
+            },
+            {
+                "riddle": "What gets wet while drying?",
+                "answer": "A towel"
+            },
+            {
+                "riddle": "I have cities, but no houses. I have forests, but no trees. I have water, but no fish. What am I?",
+                "answer": "A map"
+            },
+            {
+                "riddle": "What can run but never walks, has a mouth but never talks, has a bed but never sleeps?",
+                "answer": "A river"
+            },
+            {
+                "riddle": "I have a face and two hands, but no arms or legs. What am I?",
+                "answer": "A clock"
+            },
+            {
+                "riddle": "What is full of keys but cannot open any door?",
+                "answer": "A piano"
+            }
+        ]
+        
+        # Meme captions/templates
+        self.memes = [
+            "Drake: 👎 That thing | 👍 This thing",
+            "Distracted Boyfriend: Looking at phone while girlfriend disapproves",
+            "Two Button Panel: Sweating guy choosing between two buttons",
+            "Impact Font: THAT'S WHERE YOU'RE WRONG, KIDDO",
+            "Woman Yelling at Cat: Woman yelling at confused cat",
+            "Expanding Brain: Increasing levels of brilliance",
+            "Surprised Pikachu: Surprised face with yellow cheeks",
+            "Is This?: Poor quality image of person asking 'Is this X?'",
+            "Loss: Four panel comic meme",
+            "Stonks: Guy with finger on head saying 'stonks'",
+            "This Is Fine: Dog in burning room saying it's fine",
+            "Big Brain Time: Person with expanding brain diagram"
+        ]
     
     @commands.hybrid_command(name="joke", description="Tell a random joke")
     async def joke(self, ctx):
@@ -94,6 +146,66 @@ class FunCog(commands.Cog):
             color=0x00ffff
         )
         embed.set_footer(text=f"The coin landed on {result.lower()}")
+        
+        await ctx.send(embed=embed)
+    
+    @commands.hybrid_command(name="riddle", description="Get a random riddle")
+    async def riddle(self, ctx):
+        """Get a random riddle to solve."""
+        riddle_data = random.choice(self.riddles)
+        
+        embed = discord.Embed(
+            title="Riddle 🧩",
+            description=riddle_data['riddle'],
+            color=0xffa500
+        )
+        embed.set_footer(text="Type !answer <your_answer> to solve the riddle")
+        
+        # Store the current riddle for this user
+        if not hasattr(self, 'current_riddles'):
+            self.current_riddles = {}
+        self.current_riddles[ctx.author.id] = riddle_data['answer'].lower()
+        
+        await ctx.send(embed=embed)
+    
+    @commands.hybrid_command(name="answer", description="Answer the current riddle")
+    async def answer_riddle(self, ctx, *, answer: str):
+        """Submit an answer to the riddle."""
+        if not hasattr(self, 'current_riddles') or ctx.author.id not in self.current_riddles:
+            await ctx.send("No active riddle for you! Use !riddle to get one.")
+            return
+        
+        correct_answer = self.current_riddles[ctx.author.id]
+        user_answer = answer.lower().strip()
+        
+        if user_answer == correct_answer:
+            embed = discord.Embed(
+                title="Correct! 🎉",
+                description=f"Yes! The answer is **{correct_answer}**",
+                color=0x00ff00
+            )
+            # Remove the riddle so they can get another
+            del self.current_riddles[ctx.author.id]
+        else:
+            embed = discord.Embed(
+                title="Wrong Answer ❌",
+                description=f"That's not quite right. Try again or use !riddle for a new one.",
+                color=0xff0000
+            )
+        
+        await ctx.send(embed=embed)
+    
+    @commands.hybrid_command(name="meme", description="Get a random meme template")
+    async def meme(self, ctx):
+        """Get a random meme template."""
+        meme = random.choice(self.memes)
+        
+        embed = discord.Embed(
+            title="Meme Template 🎬",
+            description=meme,
+            color=0xff1493
+        )
+        embed.set_footer(text="Create memes with these templates!")
         
         await ctx.send(embed=embed)
 
