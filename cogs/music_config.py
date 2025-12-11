@@ -229,6 +229,11 @@ COMMAND_HELP = {
     'playlist': 'Manage playlists: `!playlist <create|load|list|delete> [name]`',
     'mood': 'Get mood-based playlist: `!clearmood <mood>`',
     'decade': 'Get decade playlist: `!decade <decade>`',
+    'lyrics': 'Show lyrics for current song: `!lyrics`',
+    'search': 'Advanced search with filters: `!search <query>`',
+    'recommendations': 'Get music recommendations: `!recommendations`',
+    'radio': 'Enable/disable radio mode: `!radio`',
+    'vote': 'Vote to skip song: `!vote`',
 }
 
 # Error messages
@@ -242,6 +247,9 @@ ERROR_MESSAGES = {
     'connection_failed': '❌ Failed to connect to voice channel!',
     'no_permission': '❌ You do not have permission to use this command!',
     'no_results': '❌ No results found for your search.',
+    'not_in_guild': '❌ This command can only be used in a server!',
+    'bot_not_in_voice': '❌ Bot is not connected to a voice channel!',
+    'user_not_in_bot_channel': '❌ You must be in the same voice channel as the bot!',
 }
 
 # Success messages
@@ -253,6 +261,11 @@ SUCCESS_MESSAGES = {
     'stopped': '⏹️ Music stopped',
     'queue_cleared': '✅ Queue cleared!',
     'shuffled': '🔀 Queue shuffled!',
+    'voted': '✅ Vote recorded!',
+    'playlist_created': '✅ Playlist created!',
+    'playlist_loaded': '✅ Playlist loaded!',
+    'removed_from_favorites': '❤️ Removed from favorites',
+    'added_to_favorites': '❤️ Added to favorites',
 }
 
 # Info colors (Discord embed colors)
@@ -264,6 +277,9 @@ EMBED_COLORS = {
     'now_playing': 0x1DB954,
     'queue': 0x7289DA,
     'stats': 0x9C27B0,      # Purple
+    'lyrics': 0x9C27B0,
+    'recommendations': 0xFF6B6B,
+    'playlist': 0x4ECDC4,
 }
 
 # Maximum values
@@ -281,4 +297,43 @@ DEFAULT_SETTINGS = {
     'allow_explicit': True,
     'auto_play': True,
     'shuffle': False,
+    'skip_votes': 3,
+    'announce_songs': True,
+    'crossfade': False,
+}
+
+# API endpoints
+API_ENDPOINTS = {
+    'lyrics_ovh': 'https://api.lyrics.ovh/v1',
+    'genius': 'https://api.genius.com',
+    'apple_music': 'https://api.music.apple.com/v1',
+    'deezer': 'https://api.deezer.com',
+    'spotify_search': 'https://api.spotify.com/v1/search',
+}
+
+# Music source patterns
+SOURCE_PATTERNS = {
+    'youtube': [
+        r'youtube\.com/watch\?v=',
+        r'youtu\.be/',
+        r'youtube\.com/playlist\?list=',
+        r'youtube\.com/shorts/',
+    ],
+    'spotify': [
+        r'spotify\.com/track/',
+        r'spotify\.com/playlist/',
+        r'spotify\.com/album/',
+        r'spotify\.com/artist/',
+    ],
+    'soundcloud': [
+        r'soundcloud\.com/',
+        r'snd\.sc/',
+    ],
+    'direct_audio': [
+        r'\.mp3$',
+        r'\.wav$',
+        r'\.flac$',
+        r'\.ogg$',
+        r'\.m4a$',
+    ]
 }
