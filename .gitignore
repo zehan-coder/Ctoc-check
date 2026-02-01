@@ -24,8 +24,6 @@ dist/
 downloads/
 eggs/
 .eggs/
-lib/
-lib64/
 parts/
 sdist/
 var/
@@ -35,6 +33,11 @@ share/python-wheels/
 .installed.cfg
 *.egg
 MANIFEST
+
+# Python virtual environments (exclude their lib dirs)
+venv/lib/
+env/lib/
+ENV/lib/
 
 # Virtual environments
 venv/
@@ -58,3 +61,28 @@ venv.bak/
 .Trashes
 ehthumbs.db
 Thumbs.db
+
+# Next.js
+.next/
+out/
+build/
+dist/
+.vercel/
+*.tsbuildinfo
+
+# Node modules
+node_modules/
+.pnp
+.pnp.js
+
+# Testing
+coverage/
+.nyc_output/
+
+# Production
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+.pnpm-debug.log*
